@@ -69,6 +69,26 @@ function createTable(data){
   });
 }
 
+//função limpeza de valores
+function cleanInputs(){
+  heightInput.value = ""
+  weightInput.value = ""
+}
+
+// função limitar os digitos para apenas numeros e virgula
+
+function validDigits(text){
+  return text.replace(/[^0-9,]/g, "");
+}
+
+[heightInput, weightInput].forEach((el) => {
+  el.addEventListener("input", (e) => {
+    const updateValue = validDigits(e.target.value);
+
+    e.target.value = updateValue;
+  });
+});
+
 
 
 // Inicialização
@@ -76,3 +96,9 @@ createTable(data);
 
 
 //Eventos
+
+clearBtn.addEventListener("click", (e)=>{
+  e.preventDefault(); // para tirar a função de enviar formulario da pagina ao clicar o botão
+  cleanInputs();
+})
+
