@@ -81,6 +81,19 @@ function validDigits(text){
   return text.replace(/[^0-9,]/g, "");
 }
 
+// função calculando o imc
+
+function calcImc(weight,height){
+  const imc = (weight/ (height * height)).toFixed(1);
+
+  return imc;
+}
+
+
+
+
+// Inicialização
+createTable(data);
 [heightInput, weightInput].forEach((el) => {
   el.addEventListener("input", (e) => {
     const updateValue = validDigits(e.target.value);
@@ -89,11 +102,27 @@ function validDigits(text){
   });
 });
 
+calcBtn.addEventListener("click",(e)=>{
+  e.preventDefault();
+  // o mais na frente do weightInput converte o mesmo para numero e replace troca as , por .
+  const weight = +weightInput.value.replace(",",".") 
+  const height = +heightInput.value.replace(",",".") 
 
+  if (!weight || !height)return;
 
-// Inicialização
-createTable(data);
+  const imc = calcImc(weight,height);
+ 
+  let info 
 
+  data.forEach((item) =>{
+    if(imc >= item.min && imc <= item.max){
+      info = item.info;
+    }
+  });
+
+  console.log(info);
+  if (!info) return;
+})
 
 //Eventos
 
