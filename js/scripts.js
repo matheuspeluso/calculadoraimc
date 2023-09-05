@@ -45,6 +45,14 @@ const weightInput = document.querySelector("#weight");
 const calcBtn = document.querySelector("#calc-btn");
 const clearBtn = document.querySelector("#clear-btn");
 
+const imcNumber = document.querySelector("#imc-number span")
+const imcInfo = document.querySelector("#imc-info span")
+
+const backBtnc = document.querySelector("#back-btn")
+
+const calcContainer = document.querySelector("#calc-container")
+const resultContainer = document.querySelector("#result-container")
+
 // Funções
 
 function createTable(data){
@@ -73,6 +81,8 @@ function createTable(data){
 function cleanInputs(){
   heightInput.value = ""
   weightInput.value = ""
+  imcNumber.classList = "";
+  imcInfo.classList = "";
 }
 
 // função limitar os digitos para apenas numeros e virgula
@@ -89,6 +99,10 @@ function calcImc(weight,height){
   return imc;
 }
 
+function showOrHideResults(){
+  calcContainer.classList.toggle("hide");
+  resultContainer.classList.toggle("hide");
+}
 
 
 
@@ -120,9 +134,36 @@ calcBtn.addEventListener("click",(e)=>{
     }
   });
 
-  console.log(info);
   if (!info) return;
-})
+
+  imcNumber.innerText = imc
+  imcInfo.innerText = info
+
+  switch(info){
+    case "Magreza":
+      imcNumber.classList.add("low");
+      imcInfo.classList.add("low");
+      break;
+    case "Normal":
+      imcNumber.classList.add("good");
+      imcInfo.classList.add("good");
+      break;
+    case "Sobrepeso":
+      imcNumber.classList.add("low");
+      imcInfo.classList.add("low");
+      break;
+    case "Obesidade":
+      imcNumber.classList.add("medium");
+      imcInfo.classList.add("medium");
+      break;
+    case "Obesidade grave":
+      imcNumber.classList.add("high");
+      imcInfo.classList.add("high");
+      break;
+  }
+
+  showOrHideResults();
+});
 
 //Eventos
 
@@ -130,4 +171,10 @@ clearBtn.addEventListener("click", (e)=>{
   e.preventDefault(); // para tirar a função de enviar formulario da pagina ao clicar o botão
   cleanInputs();
 })
+
+backBtnc.addEventListener("click",()=>{
+  cleanInputs()
+  showOrHideResults();
+})
+
 
